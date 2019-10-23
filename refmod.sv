@@ -8,8 +8,8 @@ class refmod extends uvm_component;
   uvm_analysis_imp #(transaction_in, refmod) in;​
   uvm_analysis_port #(transaction_out) out; ​
   event begin_refmodtask, begin_record, end_record, begin_regrecord, end_regrecord;​
-  logic [15:0] B;
-  logic [15:0] registers [3:0];
+  bit [15:0] B;
+  bit [15:0] registers [3:0];
 
   function new(string name = "refmod", uvm_component parent = null);​
     super.new(name, parent);​
@@ -71,10 +71,10 @@ class refmod extends uvm_component;
   endtask​
 
   function reg_reset();
-    registers[0] = 0;
-    registers[1] = 0;
-    registers[2] = 0;
-    registers[3] = 0;
+    registers[0] = 16'hC4F3;
+    registers[1] = 16'hB45E;
+    registers[2] = 16'hD1E5;
+    registers[3] = 16'h1DE4;
   endfunction
 
 endclass: refmod​
