@@ -1,4 +1,4 @@
-import "DPI-C" context function int my_ULA(int A, int B, short instru);
+import "DPI-C" context function int my_ULA(int A, int B, int instru);
 
 class refmod extends uvm_component;
   `uvm_component_utils(refmod)​
@@ -28,6 +28,7 @@ class refmod extends uvm_component;
     super.run_phase(phase);​
     fork​
       refmod_task();​
+      reg_record();
       record_tr();​
     join​
   endtask: run_phase​
@@ -37,7 +38,7 @@ class refmod extends uvm_component;
       @begin_refmodtask;​
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
-      tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.dt_instru);
+      tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
       #10;​
       -> end_record;​
       out.write(tr_out);​
@@ -55,8 +56,8 @@ class refmod extends uvm_component;
 
   task reg_record();
     @begin_regrecord;
-    registers[tr_in.tr_addr] = tr_in.dt_in;
-    B = registers[tr_in.tr_reg_sel];
+    registers[tr_in.addr] = tr_in.dt_in;
+    B = registers[tr_in.reg_sel];
     -> end_regrecord;
   endtask
 
