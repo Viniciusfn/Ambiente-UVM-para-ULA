@@ -9,7 +9,7 @@ class refmod extends uvm_component;
   uvm_analysis_port #(transaction_out) out; ​
   event begin_refmodtask, begin_record, end_record;​
 
-  function new(string name = "refmod", uvm_component parent);​
+  function new(string name = "refmod", uvm_component parent = null);​
     super.new(name, parent);​
     in = new("in", this);​
     out = new("out", this);​
