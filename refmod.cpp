@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-extern "C" int my_ULA(int A, int B, short instru){
+extern "C" int my_ULA(int A, int B, int instru){
 	switch (instru){
 		case 0:
 			return A+B;
