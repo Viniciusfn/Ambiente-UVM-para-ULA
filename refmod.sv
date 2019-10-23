@@ -7,12 +7,15 @@ class refmod extends uvm_component;
   transaction_out tr_out;​
   uvm_analysis_imp #(transaction_in, refmod) in;​
   uvm_analysis_port #(transaction_out) out; ​
-  event begin_refmodtask, begin_record, end_record;​
+  event begin_refmodtask, begin_record, end_record, begin_regrecord, end_regrecord;​
+  logic [15:0] B;
+  logic [15:0] registers [3:0];
 
   function new(string name = "refmod", uvm_component parent = null);​
     super.new(name, parent);​
     in = new("in", this);​
     out = new("out", this);​
+    reg_reset();
   endfunction​
 
   virtual function void build_phase(uvm_phase phase);​
@@ -34,7 +37,7 @@ class refmod extends uvm_component;
       @begin_refmodtask;​
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
-      tr_out.result = my_ULA(tr_in.dt_A, tr_in.dt_B, tr_in.dt_instru);
+      tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.dt_instru);
       #10;​
       -> end_record;​
       out.write(tr_out);​
@@ -45,8 +48,17 @@ class refmod extends uvm_component;
   ​virtual function write (transaction_in t);​
     tr_in = transaction_in#()::type_id::create("tr_in", this);​
     tr_in.copy(t);​
+    -> begin_regrecord;
+    @(end_regrecord);
     -> begin_refmodtask;​
   endfunction​
+
+  task reg_record();
+    @begin_regrecord;
+    registers[tr_in.tr_addr] = tr_in.dt_in;
+    B = registers[tr_in.tr_reg_sel];
+    -> end_regrecord;
+  endtask
 
   virtual task record_tr();​
     forever begin​
@@ -56,5 +68,12 @@ class refmod extends uvm_component;
       end_tr(tr_out);​
     end​
   endtask​
+
+  function reg_reset();
+    registers[0] = 0;
+    registers[1] = 0;
+    registers[2] = 0;
+    registers[3] = 0;
+  endfunction
 
 endclass: refmod​
