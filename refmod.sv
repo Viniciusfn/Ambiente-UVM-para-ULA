@@ -69,7 +69,7 @@ class refmod extends uvm_component;
       end_tr(tr_out);​
     end​
   endtask​
-
+//aaaa
   function reg_reset();
     registers[0] = 16'hC4F3;
     registers[1] = 16'hB45E;
