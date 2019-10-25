@@ -18,8 +18,6 @@ class monitor_in extends  uvm_monitor;
 
 	bit clk_reg;
 	bit clk_ula;
-
-
 	
 /*-------------------------------------------------------------------------------
 -- UVM Factory register
@@ -60,3 +58,4 @@ extern function agent_in::new(string name = "agent_in", uvm_component parent=nul
 	super.new(name, parent);
 
 endfunction: new
+////
