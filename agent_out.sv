@@ -12,6 +12,8 @@ class agent_out extends uvm_agent;
 
 endclass : agent_out
 
+
+
 extern function agent_out::new ( string name, uvm_component parent );
 	super.new(name,parent);
 
