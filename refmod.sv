@@ -1,4 +1,4 @@
-import "DPI-C" context function int my_ULA(int A, int B, short instru);
+import "DPI-C" context function int my_ULA(int A, int B, int instru);
 
 class refmod extends uvm_component;
   `uvm_component_utils(refmod)​
@@ -8,8 +8,8 @@ class refmod extends uvm_component;
   uvm_analysis_imp #(transaction_in, refmod) in;​
   uvm_analysis_port #(transaction_out) out; ​
   event begin_refmodtask, begin_record, end_record, begin_regrecord, end_regrecord;​
-  logic [15:0] B;
-  logic [15:0] registers [3:0];
+  bit [15:0] B;
+  bit [15:0] registers [3:0];
 
   function new(string name = "refmod", uvm_component parent = null);​
     super.new(name, parent);​
@@ -28,7 +28,9 @@ class refmod extends uvm_component;
     super.run_phase(phase);​
     fork​
       refmod_task();​
+      reg_record();
       record_tr();​
+// ff
     join​
   endtask: run_phase​
 
@@ -37,7 +39,7 @@ class refmod extends uvm_component;
       @begin_refmodtask;​
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
-      tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.dt_instru);
+      tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
       #10;​
       -> end_record;​
       out.write(tr_out);​
@@ -55,8 +57,8 @@ class refmod extends uvm_component;
 
   task reg_record();
     @begin_regrecord;
-    registers[tr_in.tr_addr] = tr_in.dt_in;
-    B = registers[tr_in.tr_reg_sel];
+    registers[tr_in.addr] = tr_in.dt_in;
+    B = registers[tr_in.reg_sel];
     -> end_regrecord;
   endtask
 
@@ -68,12 +70,14 @@ class refmod extends uvm_component;
       end_tr(tr_out);​
     end​
   endtask​
+//aaaa   
+
 
   function reg_reset();
-    registers[0] = 0;
-    registers[1] = 0;
-    registers[2] = 0;
-    registers[3] = 0;
+    registers[0] = 16'hC4F3;
+    registers[1] = 16'hB45E;
+    registers[2] = 16'hD1E5;
+    registers[3] = 16'h1DE4;
   endfunction
 
 endclass: refmod​
