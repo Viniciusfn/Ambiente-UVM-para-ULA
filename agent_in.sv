@@ -29,9 +29,6 @@ extern function void connect_phase(uvm_phase(phase));
 
 endclass :agent_in
 
-
-
-
 ////////////////////BODY/////////////////////////////
 extern function agent_in::new(string name, uvm_component parent = null);
 	super.new(name, parent);
