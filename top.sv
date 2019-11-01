@@ -46,16 +46,16 @@ module top;
 				);
 
 	initial begin​
-	    `ifdef XCELIUM​
-	    	$recordvars();​
-	    `endif​
-	    `ifdef VCS​
-	    	$vcdpluson;​
-	    `endif​
-	    `ifdef QUESTA​
-	    	$wlfdumpvars();​
-	    	set_config_int("*", "recording_detail", 1);​
-	    `endif​
+		`ifdef XCELIUM​
+			$recordvars();​
+		`endif​
+		`ifdef VCS​
+			$vcdpluson;​
+		`endif​
+		`ifdef QUESTA​
+			$wlfdumpvars();​
+			set_config_int("*", "recording_detail", 1);​
+		`endif​
 	end
 
 endmodule
