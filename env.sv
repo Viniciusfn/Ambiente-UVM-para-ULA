@@ -28,8 +28,8 @@ endfunction
 
 extern virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    mst.xxx_port.connect(scoreboard.ap_rfm);
+    mst.item_collected_port.connect(scoreboard.ap_rfm);
     slv.agt_resp_port.connect(scoreboard.ap_comp);
-    mst.xxx_port.connect(cov.req_port);
+    mst.item_collected_port.connect(cov.req_port);
     slv.agt_resp_port.connect(cov.resp_port);
 endfunction
