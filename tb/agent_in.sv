@@ -30,13 +30,13 @@ extern function void connect_phase(uvm_phase(phase));
 endclass :agent_in
 
 ////////////////////BODY/////////////////////////////
-extern function agent_in::new(string name, uvm_component parent = null);
+function agent_in::new(string name, uvm_component parent = null);
 	super.new(name, parent);
 	item_collected_port = new("item_collected_port", this);
 endfunction:new
 
 
-extern function void agent_in::build_phase(uvm_phase phase);
+function void agent_in::build_phase(uvm_phase phase);
 	super.build_phase(phase);
 	sqr = sequencer::type_id::create("sqr", this);
 	drv = driver_in::type_id::create("drv", this);
@@ -44,7 +44,7 @@ extern function void agent_in::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 
-extern function void agent_in::connect_phase (uvm_phase(phase));
+function void agent_in::connect_phase (uvm_phase(phase));
 	super.connect_phase(phase);
 	mon.item_collected_port.connect(item_collected_port);
 	drv.seq_item_port.connect(sqr.seq_item_export);

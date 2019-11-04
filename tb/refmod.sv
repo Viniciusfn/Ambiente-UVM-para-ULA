@@ -30,7 +30,6 @@ class refmod extends uvm_component;
       refmod_task();​
       reg_record();
       record_tr();​
-// ff
     join​
   endtask: run_phase​
 
@@ -69,9 +68,7 @@ class refmod extends uvm_component;
       @(end_record);​
       end_tr(tr_out);​
     end​
-  endtask​
-//aaaa   
-
+  endtask​ 
 
   function reg_reset();
     registers[0] = 16'hC4F3;

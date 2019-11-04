@@ -7,8 +7,7 @@ class scoreboard extends uvm_scoreboard;​
   refmod rfm;
   uvm_analysis_port #(T) ap_comp;​
   uvm_analysis_port #(transaction_in) ap_rfm;​
-
-
+  
 
   function new(string name = "scoreboard", uvm_component parent = null);​
     super.new(name, parent);​

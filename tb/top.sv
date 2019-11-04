@@ -58,4 +58,12 @@ module top;
 		`endif​
 	end
 
+  initial begin
+    uvm_config_db#(interface_vif)::set(uvm_root::get(), "*", "vif", dut_if);
+  end
+
+  initial begin
+    run_test("test");​
+  end
+
 endmodule

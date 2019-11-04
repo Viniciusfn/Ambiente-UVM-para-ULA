@@ -22,7 +22,7 @@ package pkg;
 	`include "./scoreboard.sv"
 
 	//coverage
-
+	`include "./coverage.sv"
 	//env e test
 	`include "./env.sv"
 	`include "./test.sv"

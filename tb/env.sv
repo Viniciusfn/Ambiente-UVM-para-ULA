@@ -14,11 +14,11 @@ endclass
 
 ///////////////FUNCTIONS BODIES///////////////////////////
 
-extern function new(string name, uvm_component parent = null);
+function env::new(string name, uvm_component parent = null);
     super.new(name, parent); 
 endfunction
 
-extern virtual function void build_phase(uvm_phase phase);
+virtual function void env::build_phase(uvm_phase phase);
     super.build_phase(phase);
     mst = agent_in::type_id::create("mst", this);
     slv = agent_out::type_id::create("slv", this);
@@ -26,7 +26,7 @@ extern virtual function void build_phase(uvm_phase phase);
     cov = coverage::type_id::create("cov",this);
 endfunction
 
-extern virtual function void connect_phase(uvm_phase phase);
+virtual function void env::connect_phase(uvm_phase phase);
     super.connect_phase(phase);
     mst.item_collected_port.connect(scoreboard.ap_rfm);
     slv.agt_resp_port.connect(scoreboard.ap_comp);
