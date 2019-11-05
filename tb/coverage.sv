@@ -1,10 +1,14 @@
+`uvm_analysis_imp_decl(_in)
+`uvm_analysis_imp_decl(_out)
+
 class coverage extends uvm_component;​
   `uvm_component_utils(coverage)​
 
   //transaction_in req;​
-  uvm_analysis_imp#(transaction_in, coverage) req_port;​
-  uvm_analysis_imp#(transaction_out, coverage) resp_port;​
-  int min_tr;​
+  uvm_analysis_imp_in#(transaction_in, coverage) req_port;​
+  uvm_analysis_imp_out#(transaction_out, coverage) resp_port;​
+
+  int min_tr = 1000;​
   int n_tr = 0;​
   event end_of_simulation;​
 
@@ -12,8 +16,8 @@ class coverage extends uvm_component;​
     super.new(name, parent);​
     req_port = new("req_port", this);​
     resp_port = new("resp_port", this);
-    //req=new;​
-    min_tr = 10000;​
+
+    min_tr = 1000;​
   endfunction​
 
   function void build_phase(uvm_phase phase);​
@@ -28,12 +32,16 @@ class coverage extends uvm_component;​
 
   endtask: run_phase​
 
-  function void write(transaction_in t);​
+  function void write_in(transaction_in t);​
     n_tr = n_tr + 1;​
+    $monitor("COVERAGE: ",n_tr);
     if(n_tr >= min_tr)begin​
       ->end_of_simulation;​
-    end​
+    end​   
+  endfunction
 
-  endfunction: write​
+  function void write_out(transaction_out t);​
+     
+  endfunction
 
 endclass : coverage​

@@ -2,13 +2,13 @@
 /*-------------------------------------------------------------------------------
 -- Interface
 -------------------------------------------------------------------------------*/
-typedef virtual interface_in interface_mvif;	
+
 /*-------------------------------------------------------------------------------
 -- Class declaration
 -------------------------------------------------------------------------------*/
 class monitor_in extends  uvm_monitor;
 	
-	interface_mvif mvif;
+	interface_vif vif;
 	transaction_in tr_in;
 
 	uvm_analysis_port #(transaction_in) item_collected_port;
@@ -42,20 +42,20 @@ endfunction: new
 
 
 task  monitor_in::collect_transactions(uvm_phase phase);
-	wait(!mvif.rst );
-		@(posedge mvif.rst);
+	wait(!vif.rst );
+		@(posedge vif.rst);
 
 	forever begin :receive_data
 		do begin
-			@(posedge mvif.clk);
+			@(posedge vif.clk_reg or posedge vif.clk_ula);
 		end 
-		while (mvif.valid_ula === 0 || mvif.valid_reg === 0);
+		while (vif.valid_ula === 0 || vif.valid_reg === 0);
 
 		-> begin_record;
 
 		 item_collected_port.write(tr_in);
 
-		 @(posedge mvif.clk);
+		 @(posedge vif.clk_reg or posedge vif.clk_ula);
 		 	-> end_record;
 	end:receive_data
 endtask : collect_transactions
@@ -63,7 +63,7 @@ endtask : collect_transactions
 
 function void monitor_in::build_phase(uvm_phase phase);
 	super.build_phase(phase);
-	assert(uvm_config_db#(interface_mvif)::get(this, "", "mvif", mvif ));
+	assert(uvm_config_db#(interface_vif)::get(this, "", "vif", vif ));
 	tr_in = transaction_in::type_id::create("tr_in",this);
 endfunction : build_phase
 

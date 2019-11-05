@@ -5,7 +5,7 @@ class agent_in extends uvm_agent;
 /*-------------------------------------------------------------------------------
 -- Interface, port, fields
 -------------------------------------------------------------------------------*/
-	
+	typedef uvm_sequencer#(transaction_in) sequencer;
  sequencer sqr;
  driver_in drv;
  monitor_in mon;

@@ -5,7 +5,7 @@ package pkg;
 	//transação - agent (in)
 	`include "./tb/transaction_in.sv"
 	`include "./tb/sequence_in.sv"
-	`include "./tb/sequencer.sv"
+	// `include "./tb/sequencer.sv"
 
 	`include "./tb/driver_in.sv"
 	`include "./tb/monitor_in.sv"

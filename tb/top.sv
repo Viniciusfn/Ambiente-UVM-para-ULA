@@ -14,35 +14,35 @@ module top;
 
 	always #10 clk = !clk;
 
-	interface_in dut_in(	
-							.clk_ula(clk),
-							.clk_reg(clk),
-							.rst(rst)
-						);​
-
+	interface_if dut_if(	
+					.clk_ula(clk),
+					.clk_reg(clk),
+					.rst(rst)
+				);​
+/*
 	interface_out dut_out(	
 							.clk_ula(clk),
 							.clk_reg(clk),
 							.rst(rst)
 						);​
-
+*/
 	datapath DUT(
 					.clk_ula(clk),
 					.clk_reg(clk),
 					.rst(rst),
 		
-					.valid_reg(dut_in.valid_reg),
-					.addr(dut_in.addr),
-					.data_in(dut_in.data_in),
+					.valid_reg(dut_if.valid_reg),
+					.addr(dut_if.addr),
+					.data_in(dut_if.data_in),
 		
-					.reg_sel(dut_in.reg_sel),
+					.reg_sel(dut_if.reg_sel),
 		
-					.valid_ula(dut_in.valid_ula),
-					.instru(dut_in.instru),
-					.A(dut_in.A),
+					.valid_ula(dut_if.valid_ula),
+					.instru(dut_if.instru),
+					.A(dut_if.A),
 
-					.data_out(dut_out.data_out),
-					.valid_out(dut_out.valid_out)
+					.data_out(dut_if.data_out),
+					.valid_out(dut_if.valid_out)
 				);
 
 	initial begin​
@@ -59,7 +59,7 @@ module top;
 	end
 
   initial begin
-    uvm_config_db#(interface_vif)::set(uvm_root::get(), "*", "vif", dut_in);
+    uvm_config_db#(interface_vif)::set(uvm_root::get(), "*", "vif", dut_if);
   end
 
   initial begin

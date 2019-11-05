@@ -39,6 +39,7 @@ class refmod extends uvm_component;
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
       tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
+
       #10;​
       -> end_record;​
       out.write(tr_out);​
@@ -46,19 +47,18 @@ class refmod extends uvm_component;
 
   endtask : refmod_task​
 
-  ​virtual task write (transaction_in t);​
+  ​virtual function void write (transaction_in t);​
     tr_in = transaction_in#()::type_id::create("tr_in", this);​
     tr_in.copy(t);​
     -> begin_regrecord;
-    @(end_regrecord);
-    -> begin_refmodtask;​
-  endtask
+  endfunction
 
   task reg_record();
     @begin_regrecord;
     registers[tr_in.addr] = tr_in.dt_in;
     B = registers[tr_in.reg_sel];
-    -> end_regrecord;
+    #10;
+    -> begin_refmodtask;
   endtask
 
   virtual task record_tr();​

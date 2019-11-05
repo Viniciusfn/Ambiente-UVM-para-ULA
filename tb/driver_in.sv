@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------------
 -- Unit scope virtual driver's interface
 -------------------------------------------------------------------------------*/
-typedef virtual interface_in interface_vif;
+typedef virtual interface_if interface_vif;
 /*-------------------------------------------------------------------------------
 -- Class declaration
 -------------------------------------------------------------------------------*/
@@ -98,13 +98,14 @@ task driver_in::drive_transfer(transaction_in tr_in);
 	 vif.data_in = tr_in.dt_in;
 	 vif.addr = tr_in.addr;
 	 vif.valid_reg = 1;
+	 vif.instru = tr_in.instru;
 
 	 @(posedge vif.clk_ula or vif.clk_reg)
 	 while(!vif.valid_out) 
-		@(posedge vif.clk); 
+		@(posedge vif.clk_reg or posedge vif.clk_ula); 
 
 	-> end_record;
-	 @(posedge vif.clk);
+	 @(posedge vif.clk_reg or posedge vif.clk_ula);
 
 	 vif.valid_ula = 0;
 	 vif.valid_reg = 0; 
