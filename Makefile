@@ -1,4 +1,5 @@
-IFS = ./interface_if.sv
+IFS = ./tb/interface_in.sv \
+./tb/interface_out.sv
 
 PKGS = ./tb/pkg.sv
 
