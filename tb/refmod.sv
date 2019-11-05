@@ -46,13 +46,13 @@ class refmod extends uvm_component;
 
   endtask : refmod_task​
 
-  ​virtual function write (transaction_in t);​
+  ​virtual task write (transaction_in t);​
     tr_in = transaction_in#()::type_id::create("tr_in", this);​
     tr_in.copy(t);​
     -> begin_regrecord;
     @(end_regrecord);
     -> begin_refmodtask;​
-  endfunction​
+  endtask
 
   task reg_record();
     @begin_regrecord;

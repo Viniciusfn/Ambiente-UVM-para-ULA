@@ -2,7 +2,7 @@
 /*-------------------------------------------------------------------------------
 -- Interface
 -------------------------------------------------------------------------------*/
-virtual interface_in interface_mvif;	
+typedef virtual interface_in interface_mvif;	
 /*-------------------------------------------------------------------------------
 -- Class declaration
 -------------------------------------------------------------------------------*/
@@ -26,10 +26,10 @@ class monitor_in extends  uvm_monitor;
 -------------------------------------------------------------------------------*/
 	// Constructor
 extern function new(string name = "monitor_in", uvm_component parent = null);
-extern virtual function void collect_transactions();
-extern function void build_phase(uvm_phase phase);
-extern function void run_phase(uvm_phase phase);
-extern virtual task record_tr();
+extern task collect_transactions(uvm_phase phase);
+extern virtual function void build_phase(uvm_phase phase);
+extern virtual task run_phase(uvm_phase phase);
+extern task record_tr();
 
 
 endclass : monitor_in
@@ -37,17 +37,20 @@ endclass : monitor_in
 
 function monitor_in::new(string name = "monitor_in", uvm_component parent=null);
 	super.new(name, parent);
-	item_collected_port_ula = new("item_collected_port",this);
+	item_collected_port = new("item_collected_port",this);
 endfunction: new
 
 
- virtual function void monitor_in::collect_transactions(uvm_phase phase);
-	wait(!mvif.rst);
+task  monitor_in::collect_transactions(uvm_phase phase);
+	wait(!mvif.rst );
 		@(posedge mvif.rst);
 
-	forever begin 
-		do begin_record	@(posedge mvif.clk);
-		end while (mvif.valid_ula === 0 || mvif.valid_reg === 0);
+	forever begin :receive_data
+		do begin
+			@(posedge mvif.clk);
+		end 
+		while (mvif.valid_ula === 0 || mvif.valid_reg === 0);
+
 		-> begin_record;
 
 		 item_collected_port.write(tr_in);
@@ -55,29 +58,30 @@ endfunction: new
 		 @(posedge mvif.clk);
 		 	-> end_record;
 	end:receive_data
-endfunction : collect_transactions
+endtask : collect_transactions
 
 
 function void monitor_in::build_phase(uvm_phase phase);
 	super.build_phase(phase);
-	assert(uvm_config_db#(interface_mvif)::get(this, "", "mvif", mvif );
+	assert(uvm_config_db#(interface_mvif)::get(this, "", "mvif", mvif ));
 	tr_in = transaction_in::type_id::create("tr_in",this);
 endfunction : build_phase
 
-function void monitor_in::run_phase(uvm_phase phase);
+task  monitor_in::run_phase(uvm_phase phase);
 	super.run_phase(phase);
 	fork
 		collect_transactions(phase);
-		record_tr_in();
+		record_tr();
 	join
-endfunction : run_phase
+endtask : run_phase
 
-virtual task monitor_in::record_tr();
+task monitor_in::record_tr();
 	forever begin
 		@(begin_record);
 			begin_tr(tr_in,"monitor_in");
 		@(end_record);
 			end_tr(tr_in);	
+	end
 endtask : record_tr
 
 

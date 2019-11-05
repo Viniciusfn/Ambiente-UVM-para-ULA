@@ -23,8 +23,8 @@ uvm_analysis_port #(transaction_in) item_collected_port;
 -------------------------------------------------------------------------------*/
 	// Constructor
 extern function new(string name, uvm_component parent = null);
-extern function void build_phase(uvm_phase (phase));
-extern function void connect_phase(uvm_phase(phase));
+extern function void build_phase(uvm_phase phase);
+extern function void connect_phase(uvm_phase phase);
 
 
 endclass :agent_in
@@ -44,7 +44,7 @@ function void agent_in::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 
-function void agent_in::connect_phase (uvm_phase(phase));
+function void agent_in::connect_phase (uvm_phase phase);
 	super.connect_phase(phase);
 	mon.item_collected_port.connect(item_collected_port);
 	drv.seq_item_port.connect(sqr.seq_item_export);

@@ -2,7 +2,7 @@
 
 class sequence_in extends uvm_sequence #(transaction_in);
 
-	`uvm_object_utils(sequence_in);
+	`uvm_object_utils(sequence_in)
 
 	static real transaction_id;
 

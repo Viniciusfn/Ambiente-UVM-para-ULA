@@ -59,7 +59,7 @@ module top;
 	end
 
   initial begin
-    uvm_config_db#(interface_vif)::set(uvm_root::get(), "*", "vif", dut_if);
+    uvm_config_db#(interface_vif)::set(uvm_root::get(), "*", "vif", dut_in);
   end
 
   initial begin

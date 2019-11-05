@@ -1,7 +1,10 @@
+
+typedef virtual interface_out interface_movif;
+
 class monitor_out extends uvm_monitor;
 	`uvm_component_utils(monitor_out)
 
-	interface_out mvif;
+	interface_movif mvif;
 
 	event begin_record, end_record;
 
@@ -10,10 +13,10 @@ class monitor_out extends uvm_monitor;
 	uvm_analysis_port #(transaction_out) resp_port;
 
 	extern function new							( string name, uvm_component parent );
-	extern virtual function build_phase 		( uvm_phase phase );
-	extern virtual task run_phase				( uvm_phase phase );
-	extern virtual task collect_transactions	( uvm_phase phase );
-	extern virtual task record_tr				( );
+	extern virtual function void build_phase 		( uvm_phase phase );
+	extern  task run_phase				( uvm_phase phase );
+	extern task collect_transactions	( uvm_phase phase );
+	extern  task record_tr				( );
 
 endclass : monitor_out
 
@@ -26,8 +29,8 @@ function monitor_out::new (string name, uvm_component parent);
 
 endfunction : new
 
-virtual function monitor_out::build_phase ( uvm_phase phase );
-	super.build(phase);
+function void monitor_out::build_phase ( uvm_phase phase );
+	super.build_phase(phase);
 
 	assert(uvm_config_db#(interface_mvif)::get(this, "", "mvif", mvif))begin
 		`uvm_fatal("NOVIF", "failed to get virtual interface")
@@ -37,8 +40,8 @@ virtual function monitor_out::build_phase ( uvm_phase phase );
 
 endfunction : build_phase
 
-virtual task monitor_out::run_phase ( uvm_phase phase );
-	super.run(phase);
+task monitor_out::run_phase ( uvm_phase phase );
+	super.run_phase(phase);
 
 	fork
 		collect_transactions(phase);
@@ -47,7 +50,7 @@ virtual task monitor_out::run_phase ( uvm_phase phase );
 
 endtask : run_phase
 
-virtual task monitor_out::collect_transactions( uvm_phase phase );
+task monitor_out::collect_transactions( uvm_phase phase );
 
 	wait(mvif.rst === 1);
 		@(negedge mvif.rst);
@@ -68,7 +71,7 @@ virtual task monitor_out::collect_transactions( uvm_phase phase );
 
 endtask
 
-virtual task monitor_out::record_tr();
+task monitor_out::record_tr();
 	forever begin
 		@(begin_record);
 			begin_tr(tr_out, "monitor_out");

@@ -1,14 +1,14 @@
 ​class test extends uvm_test;​
-  `uvm_component_utils(simple_test)​
+  `uvm_component_utils(test)​
   
   	env env_h;
 	sequence_in seq;
 
 	extern function new(string name, uvm_component parent);​
-	extern virtual function void build_phase(uvm_phase phase);​
+	extern  function void build_phase(uvm_phase phase);​
 	extern task run_phase(uvm_phase phase);​
 
-endclass: simple_test
+endclass: test
 
 ///////////////FUNCTIONS BODIES///////////////////////////
 
@@ -16,7 +16,7 @@ function test::new(string name, uvm_component parent);​
 	super.new(name, parent);​
 endfunction: new​
 
-virtual function void test::build_phase(uvm_phase phase);​
+ function void test::build_phase(uvm_phase phase);​
 	super.build_phase(phase);​
 	env_h = env::type_id::create("env_h", this);
 ​    seq = sequence_in::type_id::create("seq", this);
