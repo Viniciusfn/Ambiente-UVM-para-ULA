@@ -1,3 +1,27 @@
+// Check that analysis imports are connected.
+/*`define CHECK_PORT_CONNECTION(PORT) \
+  begin \
+    uvm_port_list list; \
+    PORT.get_provided_to(list); \
+    if (!list.size()) begin \
+      `uvm_fatal("AP_CONNECT", \
+        $sformatf("Analysis port %s not connected.", PORT.get_full_name())); \
+    end \
+  end
+
+`define CHECK_PORT_CONNECTIONS(PORT) \
+  begin \
+    uvm_port_list list; \
+    PORT.get_connected_to(list); \
+    if (list.size()) begin \
+      `uvm_info("AP_CONNECT", \
+                $sformatf("Analysis port %p connected.", list),UVM_LOW); \
+    end \
+  end
+
+*/
+
+
 package pkg;
 	`include "uvm_macros.svh"
 	import uvm_pkg::*;

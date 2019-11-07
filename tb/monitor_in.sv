@@ -53,6 +53,12 @@ task  monitor_in::collect_transactions(uvm_phase phase);
 
 		-> begin_record;
 
+		 this.tr_in.dt_A = vif.A ;
+		 this.tr_in.reg_sel = vif.reg_sel ;
+		 this.tr_in.dt_in = vif.data_in ;
+		 this.tr_in.addr = vif.addr ;
+		 this.tr_in.instru = vif.instru;
+
 		 item_collected_port.write(tr_in);
 
 		 @(posedge vif.clk_reg or posedge vif.clk_ula);
