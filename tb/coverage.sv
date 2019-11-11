@@ -17,7 +17,7 @@ class coverage extends uvm_component;​
     req_port = new("req_port", this);​
     resp_port = new("resp_port", this);
 
-    min_tr = 1000;​
+  
   endfunction​
 
   function void build_phase(uvm_phase phase);​
@@ -34,7 +34,6 @@ class coverage extends uvm_component;​
 
   function void write_in(transaction_in t);​
     n_tr = n_tr + 1;​
-    $monitor("COVERAGE: ",n_tr);
     if(n_tr >= min_tr)begin​
       ->end_of_simulation;​
     end​   

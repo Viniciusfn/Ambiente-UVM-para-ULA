@@ -52,22 +52,21 @@ endtask : run_phase
 
 task monitor_out::collect_transactions( uvm_phase phase );
 
-	wait(vif.rst === 1);
-		@(negedge vif.rst);
+	wait(vif.rst === 0);
+	@(posedge vif.rst);
 
-		forever begin
-			do begin
-				@(posedge vif.clk_ula or posedge vif.clk_reg);
-			end while ( vif.valid_out === 0 );
-			
-			-> begin_record;
+	forever begin
+		@(posedge vif.clk_ula or posedge vif.clk_reg);
+		wait( vif.valid_out === 1 );
+		
+		-> begin_record;
 
-			tr_out.result = vif.data_out;
-			resp_port.write(tr_out);
+		tr_out.result = vif.data_out;
+		resp_port.write(tr_out);
 
-			@(posedge vif.clk_ula);
-			-> end_record;
-        end
+		@(posedge vif.clk_ula);
+		-> end_record;
+    end
 
 endtask
 

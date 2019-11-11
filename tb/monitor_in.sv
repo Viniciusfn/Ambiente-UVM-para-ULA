@@ -46,10 +46,7 @@ task  monitor_in::collect_transactions(uvm_phase phase);
 		@(posedge vif.rst);
 
 	forever begin :receive_data
-		do begin
-			@(posedge vif.clk_reg or posedge vif.clk_ula);
-		end 
-		while (vif.valid_ula === 0 || vif.valid_reg === 0);
+		@(posedge vif.valid_ula  or posedge vif.valid_reg);
 
 		-> begin_record;
 
@@ -58,7 +55,7 @@ task  monitor_in::collect_transactions(uvm_phase phase);
 		 this.tr_in.dt_in = vif.data_in ;
 		 this.tr_in.addr = vif.addr ;
 		 this.tr_in.instru = vif.instru;
-
+	 @(posedge vif.clk_reg or posedge vif.clk_ula);
 		 item_collected_port.write(tr_in);
 
 		 @(posedge vif.clk_reg or posedge vif.clk_ula);

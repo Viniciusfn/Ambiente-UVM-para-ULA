@@ -20,7 +20,6 @@ class refmod extends uvm_component;
 
   virtual function void build_phase(uvm_phase phase);​
     super.build_phase(phase);​
-    tr_out = transaction_out::type_id::create("tr_out", this);​
 
   endfunction: build_phase​
 
@@ -39,8 +38,7 @@ class refmod extends uvm_component;
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
       tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
-
-      #10;​
+      $display("refmod task hint");
       -> end_record;​
       out.write(tr_out);​
     end​
@@ -54,17 +52,20 @@ class refmod extends uvm_component;
   endfunction
 
   task reg_record();
+    forever begin
     @begin_regrecord;
+    $display("reg_record hint");
     registers[tr_in.addr] = tr_in.dt_in;
     B = registers[tr_in.reg_sel];
-    #10;
     -> begin_refmodtask;
+  end
   endtask
 
   virtual task record_tr();​
     forever begin​
       @(begin_record);​
       begin_tr(tr_out, "refmod");​
+      $display("\n@%0t: refmod result = %0d \n",$time, this.tr_out.result);
       @(end_record);​
       end_tr(tr_out);​
     end​
