@@ -82,12 +82,13 @@ endtask : reset_signals
  task driver_in::get_and_drive(uvm_phase phase);
 	wait(!vif.rst);
 	@(posedge vif.rst);
-	@(posedge vif.clk_ula or posedge vif.clk_reg);
+	
 
 	forever begin 
-		seq_item_port.get(req);
+		@(posedge vif.clk_ula or posedge vif.clk_reg);
+		seq_item_port.get(tr_in);
 		->begin_record;
-		drive_transfer(req);
+		drive_transfer(tr_in);
 	end
 endtask : get_and_drive
 
@@ -115,9 +116,9 @@ endtask : drive_transfer
  task driver_in::record_tr();
 	forever begin
 		@(begin_record);
-		begin_tr(req,"driver_in");
+		begin_tr(tr_in,"driver_in");
 		@(end_record);
-		end_tr(req);
+		end_tr(tr_in);
 	end
 endtask : record_tr
 

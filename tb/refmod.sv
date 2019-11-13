@@ -39,6 +39,7 @@ class refmod extends uvm_component;
       -> begin_record;​
       tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
       $display("refmod task hint");
+      #10;
       -> end_record;​
       out.write(tr_out);​
     end​
