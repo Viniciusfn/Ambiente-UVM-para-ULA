@@ -93,17 +93,18 @@ endtask : reset_signals
 endtask : get_and_drive
 
 task driver_in::drive_transfer(transaction_in tr_in);
-	 vif.A = tr_in.dt_A;
-	 vif.reg_sel = tr_in.reg_sel;
-	 vif.valid_ula = 1;
-	 vif.data_in = tr_in.dt_in;
-	 vif.addr = tr_in.addr;
-	 vif.valid_reg = 1;
-	 vif.instru = tr_in.instru;
+	 vif.A          <= tr_in.dt_A;
+	 vif.reg_sel    <= tr_in.reg_sel;
+	 vif.valid_ula  <= 1;
+	 vif.data_in    <= tr_in.dt_in;
+	 vif.addr       <= tr_in.addr;
+	 vif.valid_reg  <= 1;
+	 vif.instru     <= tr_in.instru;
 
 	 @(posedge vif.clk_ula or vif.clk_reg)
-	 while(!vif.valid_out) 
-		@(posedge vif.clk_reg or posedge vif.clk_ula); 
+	 //while(!vif.valid_out) 
+		//@(posedge vif.clk_reg or posedge vif.clk_ula); 
+	 wait (vif.valid_out)
 
 	-> end_record;
 	 @(posedge vif.clk_reg or posedge vif.clk_ula);
