@@ -56,8 +56,9 @@ task monitor_out::collect_transactions( uvm_phase phase );
 	@(posedge vif.rst);
 
 	forever begin
-		@(posedge vif.clk_ula or posedge vif.clk_reg);
 		wait( vif.valid_out === 1 );
+		@(posedge vif.clk_ula or posedge vif.clk_reg);
+		//wait( vif.valid_out === 1 );
 		
 		-> begin_record;
 

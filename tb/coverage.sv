@@ -8,7 +8,7 @@ class coverage extends uvm_component;​
   uvm_analysis_imp_in#(transaction_in, coverage) req_port;​
   uvm_analysis_imp_out#(transaction_out, coverage) resp_port;​
 
-  int min_tr = 1000;​
+  int min_tr = 1000​;
   int n_tr = 0;​
   event end_of_simulation;​
 
@@ -34,7 +34,7 @@ class coverage extends uvm_component;​
 
   function void write_in(transaction_in t);​
     n_tr = n_tr + 1;​
-    if(n_tr >= min_tr)begin​
+    if(n_tr > min_tr)begin​
       ->end_of_simulation;​
     end​   
   endfunction

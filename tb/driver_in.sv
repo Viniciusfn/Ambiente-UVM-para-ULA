@@ -100,7 +100,7 @@ task driver_in::drive_transfer(transaction_in tr_in);
 	 vif.data_in    <= tr_in.dt_in;
 	 vif.addr       <= tr_in.addr;
 	 vif.valid_reg  <= 1;
-	 vif.instru     <= 0;
+	 vif.instru     <= tr_in.instru;
 
 	 @(posedge vif.clk_ula or vif.clk_reg)
 	 //while(!vif.valid_out) 

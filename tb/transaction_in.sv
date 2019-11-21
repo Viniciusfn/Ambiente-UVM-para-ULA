@@ -2,7 +2,7 @@ class transaction_in extends uvm_sequence_item;​
 
   rand bit [15:0] dt_A;​
   rand bit [1:0]  reg_sel;
-  bit [1:0]  instru;
+  rand bit [1:0]  instru;
   rand bit [15:0] dt_in;
   rand bit [1:0]  addr;
 
