@@ -38,7 +38,7 @@ class refmod extends uvm_component;
       tr_out = transaction_out::type_id::create("tr_out", this);​
       -> begin_record;​
       tr_out.result = my_ULA(tr_in.dt_A, B, tr_in.instru);
-      $display("refmod task hint");
+      $display("refmod task hit");
       #10;
       -> end_record;​
       out.write(tr_out);​
@@ -55,9 +55,9 @@ class refmod extends uvm_component;
   task reg_record();
     forever begin
     @begin_regrecord;
-    $display("reg_record hint");
-    registers[tr_in.addr] = tr_in.dt_in;
+    $display("reg_record hit");
     B = registers[tr_in.reg_sel];
+    registers[tr_in.addr] = tr_in.dt_in;
     -> begin_refmodtask;
   end
   endtask
@@ -73,10 +73,10 @@ class refmod extends uvm_component;
   endtask​ 
 
   function reg_reset();
-    registers[0] = 16'hC4F3;
-    registers[1] = 16'hB45E;
-    registers[2] = 16'hD1E5;
-    registers[3] = 16'h1DE4;
+    registers[0] <= 16'hC4F3;
+    registers[1] <= 16'hB45E;
+    registers[2] <= 16'hD1E5;
+    registers[3] <= 16'h1DE4;
   endfunction
 
 endclass: refmod​

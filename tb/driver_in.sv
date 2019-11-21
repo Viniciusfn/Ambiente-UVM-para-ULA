@@ -17,6 +17,7 @@ class driver_in extends uvm_driver#(transaction_in);
 
 	event begin_record, end_record;
 
+	integer ignore_flag;
 /*-------------------------------------------------------------------------------
 -- UVM Factory register
 -------------------------------------------------------------------------------*/
@@ -67,11 +68,11 @@ endtask : run_phase
  task driver_in::reset_signals();
 	wait(!vif.rst)
 	forever begin 
-		vif.valid_reg 	<='1;
+		vif.valid_reg 	<='0;
 		vif.A 			<='x;
 		vif.reg_sel 	<='x;
 		vif.instru 		<='x;
-		vif.valid_ula 	<='1;
+		vif.valid_ula 	<='0;
 		vif.addr 		<='x;
 		vif.data_in 	<='x; 
 		@(negedge vif.rst);
@@ -99,7 +100,7 @@ task driver_in::drive_transfer(transaction_in tr_in);
 	 vif.data_in    <= tr_in.dt_in;
 	 vif.addr       <= tr_in.addr;
 	 vif.valid_reg  <= 1;
-	 vif.instru     <= tr_in.instru;
+	 vif.instru     <= 0;
 
 	 @(posedge vif.clk_ula or vif.clk_reg)
 	 //while(!vif.valid_out) 
