@@ -18,7 +18,6 @@ class datapath_coverage_in extends uvm_subscriber#(transaction_in);
    	covergroup cov_input();
 		option.name = "cov_input";
 		option.per_instance = 1;
-
 		// bins for covering inputs 
 
 		cov_instru: coverpoint tr_in.instru {
@@ -30,17 +29,19 @@ class datapath_coverage_in extends uvm_subscriber#(transaction_in);
 		}
 
 		cov_reg_sel: coverpoint tr_in.reg_sel {
-		bins reg_sel_bin = {[0:$]};
+		bins reg_sel_bin[] = {[0:$]};
 		}
 
 		cov_dt_A: coverpoint tr_in.dt_A {
-		bins dt_A_lo = {[$:300]};
-		bins dt_A_hi = {[65036:$]};
+		bins dt_A_lo[] = {[$:1000]};
+		bins dt_A_hi[] = {[65036:$]};
 		}
 		cov_dt_in: coverpoint tr_in.dt_in {
-		bins dt_in_lo = {[$:300]};
-		bins dt_in_hi = {[65036:$]};
+		bins dt_in_lo[] = {[$:1000]};
+		bins dt_in_hi[]= {[65036:$]};
 		}
+
+		cross_addr_reg_instru:	cross tr_in.addr, tr_in.reg_sel, tr_in.instru; 
 	endgroup : cov_input
 
 endclass : datapath_coverage_in
@@ -51,6 +52,10 @@ function datapath_coverage_in::new(string name = "datapath_coverage_in", uvm_com
 	super.new(name, parent);
 	cov_input = new();
 	covi = new("covi", this);
+		cov_input.cov_instru.option.at_least = 300; 
+		cov_input.cov_addr.option.at_least = 300; 
+		cov_input.cov_reg_sel.option.at_least = 300; 
+
 endfunction : new
 
 
@@ -94,8 +99,8 @@ class datapath_coverage_out extends uvm_subscriber#(transaction_out);
 
 		cov_out: coverpoint tr_out.result {
 		illegal_bins overflow = {[18'h20000:$]};
-		bins result_lo = {[$:300]};
-		bins result_hi = {[(18'h20000-500):$]};
+		bins result_lo[] = {[$:1000]};
+		bins result_hi[] = {[(18'h20000-5000):$]};
 		}
 
 	endgroup : cov_output
