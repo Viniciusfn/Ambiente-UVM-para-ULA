@@ -2,10 +2,10 @@
 // File created by:  xrun
 // Do not modify this file
 //
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/tb/pkg.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/tb/interface_if.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/rtl/datapath.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/rtl/ula.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/rtl/rb.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/rtl/mux.sv
-/mnt/hdd1tera/xmen/Documentos/vinicius.nobrega/Ambiente-UVM-para-ULA/tb/top.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/tb/pkg.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/tb/interface_if.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/rtl/datapath.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/rtl/ula.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/rtl/rb.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/rtl/mux.sv
+/mnt/hdd1tera/xmen/Documentos/Murilo/Verificação/Ambiente-UVM-para-ULA/tb/top.sv

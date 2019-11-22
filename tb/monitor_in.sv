@@ -8,9 +8,9 @@
 -------------------------------------------------------------------------------*/
 class monitor_in extends  uvm_monitor;
 	
+
 	interface_vif vif;
 	transaction_in tr_in;
-
 	uvm_analysis_port #(transaction_in) item_collected_port;
 
 	event begin_record, end_record;
@@ -55,8 +55,12 @@ task  monitor_in::collect_transactions(uvm_phase phase);
 		 this.tr_in.dt_in = vif.data_in ;
 		 this.tr_in.addr = vif.addr ;
 		 this.tr_in.instru = vif.instru;
+
+
 	 @(posedge vif.clk_reg or posedge vif.clk_ula);
 		 item_collected_port.write(tr_in);
+
+
 
 		 @(posedge vif.clk_reg or posedge vif.clk_ula);
 		 	-> end_record;

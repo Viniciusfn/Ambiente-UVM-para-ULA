@@ -47,6 +47,7 @@ package pkg;
 
 	//coverage
 	`include "./tb/coverage.sv"
+	`include "./tb/datapath_coverage.sv"
 	//env e test
 	`include "./tb/env.sv"
 	`include "./tb/test.sv"
